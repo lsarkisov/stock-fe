@@ -31,7 +31,9 @@ function format(json) {
 
 const initState = {
   request: false,
-  stock: null,
+  daily: null,
+  company: null,
+  error: false,
 }
 
 const companyDaily = (state = initState, action) => {
@@ -41,7 +43,6 @@ const companyDaily = (state = initState, action) => {
         ...state,
         ...{
           request: true,
-          stock: null,
           error: null,
         },
       }
@@ -61,7 +62,6 @@ const companyDaily = (state = initState, action) => {
         ...state,
         ...{
           request: false,
-          stock: null,
           error: action.error,
         },
       }
