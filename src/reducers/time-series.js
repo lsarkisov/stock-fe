@@ -46,17 +46,17 @@ const timeSeries = (state = initState, action) => {
         },
       }
     case types.TIME_SERIES[SUCCESS]:
-      const json = format(action.payload)
+      const { daily, company } = action.payload
       return {
         ...state,
         ...{
-          stock: json,
+          daily: format(daily),
+          company,
           request: false,
           error: null,
         },
       }
     case types.TIME_SERIES[FAILURE]:
-      console.log('ERROR', action.error)
       return {
         ...state,
         ...{

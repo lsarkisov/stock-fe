@@ -9,6 +9,6 @@ function callApi(endpoint, headers) {
     .catch((error) => error)
 }
 
-/* Time series daily
-----------------------------------------*/
-export const timeSeriesDaily = (name) => callApi(`/series/daily${name}`)
+/* Company overview and daily and time series daily
+-------------------------------------------------------*/
+export const getCompanyDaily = (name) => callApi(`/stock/company/daily${name}`)

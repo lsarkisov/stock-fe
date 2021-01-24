@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
-import { Container, Row, Col, Alert } from 'react-bootstrap'
+import { Container, Row, Col, Alert, Table } from 'react-bootstrap'
 import { Line } from '@reactchartjs/react-chart.js'
 import 'chartjs-plugin-zoom'
 import { StockPage } from 'lib'
@@ -53,17 +53,17 @@ export default function TimeSeries(props) {
   const [data, setData] = useState()
   const dispatch = useDispatch()
   const location = useLocation()
-  const { stock, error } = useSelector((state) => state.timeSeries)
+  const { daily, company, error } = useSelector((state) => state.timeSeries)
 
   useEffect(() => {
-    if (!stock) {
+    if (!daily) {
       dispatch(getTimeSeriesAction(location.pathname))
     }
 
-    if (stock && !data) {
-      setData(setDataSet(stock))
+    if (daily && !data) {
+      setData(setDataSet(daily))
     }
-  }, [stock, location, data, setData, dispatch])
+  }, [daily, location, data, setData, dispatch])
 
   useEffect(() => {
     return () => dispatch(timeSeriesErroAction(null))
@@ -72,25 +72,35 @@ export default function TimeSeries(props) {
   return (
     <StockPage>
       <Container fluid className="time-series">
-        {!stock && !error && <StockSpinner />}
+        {!daily && !error && <StockSpinner />}
         {error && (
           <Alert variant="danger">Please check the company name.</Alert>
         )}
-        {stock && (
-          <Row>
-            <Col sm={12} md={12} lg={6} className="time-series__chart">
-              <Line data={data} options={options} />
-            </Col>
-            <Col sm={12} md={12} lg={6} className="time-series__chart">
-              <ul>
-                {Object.keys(stock.metaData).map((item) => (
-                  <li key={item}>
-                    {<b>{item}:</b>} {<span>{stock.metaData[item]}</span>}
-                  </li>
-                ))}
-              </ul>
-            </Col>
-          </Row>
+        {daily && (
+          <Fragment>
+            <Row>
+              <Col>
+                <h1>{company['Name']}</h1>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={12} md={12} lg={6} className="time-series__chart">
+                <Line data={data} options={options} />
+              </Col>
+              <Col sm={12} md={12} lg={6} className="time-series__chart">
+                <Table>
+                  <tbody>
+                    {Object.keys(company).map((key) => (
+                      <tr key={key}>
+                        {<td>{key}</td>}
+                        {<td>{company[key]}</td>}
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </Col>
+            </Row>
+          </Fragment>
         )}
       </Container>
     </StockPage>
