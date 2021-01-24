@@ -43,7 +43,7 @@ it('has class page', () => {
 
 it('has a logo', () => {
   const logoText = document.querySelector('a').textContent
-  expect(logoText).toBe('Stock Tours')
+  expect(logoText).toBe('Stock')
 })
 
 it('renders children', () => {

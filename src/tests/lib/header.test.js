@@ -35,7 +35,7 @@ afterEach(() => {
 
 it("logo's text", () => {
   const nav = document.querySelector('a')
-  expect(nav.textContent).toBe('Stock Tours')
+  expect(nav.textContent).toBe('Stock')
 })
 
 it('default path', () => {
