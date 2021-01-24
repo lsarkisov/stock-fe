@@ -6,7 +6,6 @@ const timeSeriesDaily = 'Time Series (Daily)'
 
 function format(json) {
   const labels = []
-
   const open = []
   const high = []
   const low = []
@@ -31,7 +30,8 @@ function format(json) {
 }
 
 const initState = {
-  all: null,
+  request: false,
+  stock: null,
 }
 
 const timeSeries = (state = initState, action) => {
@@ -41,7 +41,8 @@ const timeSeries = (state = initState, action) => {
         ...state,
         ...{
           request: true,
-          all: null,
+          stock: null,
+          error: null,
         },
       }
     case types.TIME_SERIES[SUCCESS]:
@@ -49,16 +50,19 @@ const timeSeries = (state = initState, action) => {
       return {
         ...state,
         ...{
-          all: json,
+          stock: json,
           request: false,
+          error: null,
         },
       }
     case types.TIME_SERIES[FAILURE]:
+      console.log('ERROR', action.error)
       return {
         ...state,
         ...{
           request: false,
-          all: null,
+          stock: null,
+          error: action.error,
         },
       }
 

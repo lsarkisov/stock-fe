@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Row, Col, Alert } from 'react-bootstrap'
 import { Line } from '@reactchartjs/react-chart.js'
 import 'chartjs-plugin-zoom'
 import { StockPage } from 'lib'
-import { getTimeSeriesAction } from 'actions/time-series'
+import { getTimeSeriesAction, timeSeriesErroAction } from 'actions/time-series'
 import { StockSpinner } from 'lib'
 
 const borderColor = ['#39e7a6', '#33a0fc', '#febc45', '#ff4560', '#feb01a']
@@ -53,32 +53,39 @@ export default function TimeSeries(props) {
   const [data, setData] = useState()
   const dispatch = useDispatch()
   const location = useLocation()
-  const { all } = useSelector((state) => state.timeSeries)
+  const { stock, error } = useSelector((state) => state.timeSeries)
 
   useEffect(() => {
-    if (!all) {
+    if (!stock) {
       dispatch(getTimeSeriesAction(location.pathname))
     }
 
-    if (all && !data) {
-      setData(setDataSet(all))
+    if (stock && !data) {
+      setData(setDataSet(stock))
     }
-  }, [all, location, data, setData, dispatch])
+  }, [stock, location, data, setData, dispatch])
+
+  useEffect(() => {
+    return () => dispatch(timeSeriesErroAction(null))
+  }, [])
 
   return (
     <StockPage>
       <Container fluid className="time-series">
-        {!all && <StockSpinner />}
-        {all && (
+        {!stock && !error && <StockSpinner />}
+        {error && (
+          <Alert variant="danger">Please check the company name.</Alert>
+        )}
+        {stock && (
           <Row>
             <Col sm={12} md={12} lg={6} className="time-series__chart">
               <Line data={data} options={options} />
             </Col>
             <Col sm={12} md={12} lg={6} className="time-series__chart">
               <ul>
-                {Object.keys(all.metaData).map((item) => (
+                {Object.keys(stock.metaData).map((item) => (
                   <li key={item}>
-                    {<b>{item}:</b>} {<span>{all.metaData[item]}</span>}
+                    {<b>{item}:</b>} {<span>{stock.metaData[item]}</span>}
                   </li>
                 ))}
               </ul>
