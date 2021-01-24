@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import timeSeries from './time-series'
+import companyDaily from './company-daily'
 
 const reducers = combineReducers({
-  timeSeries,
+  companyDaily,
 })
 
 export default reducers

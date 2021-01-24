@@ -9,4 +9,4 @@ function createRequestTypes(base) {
 
 /* People
 ----------------------------------------*/
-export const TIME_SERIES = createRequestTypes('TIME_SERIES')
+export const COMPANY_DAILY = createRequestTypes('COMPANY_DAILY')

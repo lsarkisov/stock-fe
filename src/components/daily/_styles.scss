@@ -1,9 +1,4 @@
-.time-series {
-  h1 {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-
+.daily {
   &__chart {
     @include media-breakpoint-down(md) {
       padding-bottom: 2rem;

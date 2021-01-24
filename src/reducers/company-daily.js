@@ -34,9 +34,9 @@ const initState = {
   stock: null,
 }
 
-const timeSeries = (state = initState, action) => {
+const companyDaily = (state = initState, action) => {
   switch (action.type) {
-    case types.TIME_SERIES[REQUEST]:
+    case types.COMPANY_DAILY[REQUEST]:
       return {
         ...state,
         ...{
@@ -45,7 +45,7 @@ const timeSeries = (state = initState, action) => {
           error: null,
         },
       }
-    case types.TIME_SERIES[SUCCESS]:
+    case types.COMPANY_DAILY[SUCCESS]:
       const { daily, company } = action.payload
       return {
         ...state,
@@ -56,7 +56,7 @@ const timeSeries = (state = initState, action) => {
           error: null,
         },
       }
-    case types.TIME_SERIES[FAILURE]:
+    case types.COMPANY_DAILY[FAILURE]:
       return {
         ...state,
         ...{
@@ -71,4 +71,4 @@ const timeSeries = (state = initState, action) => {
   }
 }
 
-export default timeSeries
+export default companyDaily

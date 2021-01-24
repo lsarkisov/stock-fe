@@ -8,7 +8,7 @@ export default function NoMatch(props) {
 
   return (
     <StockPage>
-      <Container fluid className="time-series">
+      <Container fluid>
         <h2>
           <Link to="/">Home page</Link>
         </h2>

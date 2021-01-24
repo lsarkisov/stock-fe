@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import NoMatch from 'components/no-match'
 import Home from 'components/home'
-import TimeSeries from 'components/time-series'
+import CompanyDaily from 'components/company-daily'
 
 function Routes() {
   return (
@@ -12,7 +12,7 @@ function Routes() {
           <Home />
         </Route>
         <Route exact path="/:name">
-          <TimeSeries />
+          <CompanyDaily />
         </Route>
         <Route>
           <NoMatch />
