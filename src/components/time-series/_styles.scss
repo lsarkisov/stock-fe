@@ -1,0 +1,7 @@
+.time-series {
+  &__chart {
+    @include media-breakpoint-down(md) {
+      padding-bottom: 2rem;
+    }
+  }
+}
